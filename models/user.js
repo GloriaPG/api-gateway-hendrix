@@ -9,6 +9,16 @@ var UserSchema = new mongoose.Schema({
     unique: true,
     required: true
   },
+  name: {
+    type: String,
+    unique: true,
+    required: false
+  },
+  role: {
+    type: String,
+    unique: true,
+    required: false
+  },
   password: {
     type: String,
     required: true

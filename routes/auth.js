@@ -1,4 +1,5 @@
 var jwt = require('jwt-simple');
+var User = require('../models/user');
 
 var auth = {
 
@@ -42,25 +43,40 @@ var auth = {
 
     validate: function(username, password) {
         // spoofing the DB response for simplicity
-        var dbUserObj = { // spoofing a userobject from the DB.
+        // Use the User model to find a specific usermodel
+        var result
+        User.find({ username:username, password:password }, function(err, user) {
+            if (err)
+                result=err;
+            else
+                result =user;
+        });
+        /*** var dbUserObj = { // spoofing a userobject from the DB.
             name: 'zesk8',
             role: 'admin',
             username: 'zesk8@node.com',
             password: 'secret182'
-        };
-
-        return dbUserObj;
+        };***/
+        console.log('Resultado VALIDATE : ' +  result)
+        return result;
     },
 
-    validateUser: function(username) {
+    validateUser: function(req,username) {
         // spoofing the DB response for simplicity
-        var dbUserObj = { // spoofing a userobject from the DB.
+        var result
+        /*** var dbUserObj = { // spoofing a userobject from the DB.
             name: 'zesk8',
             role: 'user',
             username: 'zesk8@node.com'
-        };
-
-        return dbUserObj;
+        };***/
+       result = User.find({ username:username }, function(err, user) {
+            if (err)
+                result=err;
+            else
+                result =user;
+        });
+        console.log('Resultado VALIDATEUSER : ' +  result)
+        return result;
     },
 }
 
