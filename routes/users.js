@@ -7,7 +7,7 @@ var express = require('express'),
     userController = require('../controllers/user.js');
 
 // Create endpoint handlers for /users
-router.route('/users')
+router.route('/')
     .post(userController.postUsers)
     .get(authController.isAuthenticated, userController.getUsers);
 

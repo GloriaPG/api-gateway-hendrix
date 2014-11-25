@@ -9,12 +9,12 @@ var express = require('express'),
 
 
 // Create endpoint handlers for /beers
-router.route('/beers')
+router.route('/')
     .post(authController.isAuthenticated, beerController.postBeers)
     .get(authController.isAuthenticated, beerController.getBeers);
 
 // Create endpoint handlers for /beers/:beer_id
-router.route('/beers/:beer_id')
+router.route(':beer_id')
     .get(authController.isAuthenticated, beerController.getBeer)
     .put(authController.isAuthenticated, beerController.putBeer)
     .delete(authController.isAuthenticated, beerController.deleteBeer);

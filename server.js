@@ -6,10 +6,6 @@ var passport = require('passport');
 var logger = require('morgan');
 
 
-/** var beerController = require('./controllers/beer');
-var userController = require('./controllers/user');
-var authController = require('./controllers/auth'); ***/
-
 // Connect to the beerlocker MongoDB
 mongoose.connect('mongodb://localhost:27017/beerlocker');
 
@@ -27,21 +23,6 @@ app.use(logger('dev'));
 // Create our Express router
 var router = express.Router();
 
-// Create endpoint handlers for /beers
-/*** router.route('/beers')
-    .post(authController.isAuthenticated, beerController.postBeers)
-    .get(authController.isAuthenticated, beerController.getBeers);
-
-// Create endpoint handlers for /beers/:beer_id
-router.route('/beers/:beer_id')
-    .get(authController.isAuthenticated, beerController.getBeer)
-    .put(authController.isAuthenticated, beerController.putBeer)
-    .delete(authController.isAuthenticated, beerController.deleteBeer); ***/
-
-// Create endpoint handlers for /users
-/*** router.route('/users')
-    .post(userController.postUsers)
-    .get(authController.isAuthenticated, userController.getUsers); ***/
 
 app.all('/*', function(req, res, next) {
     // CORS headers
