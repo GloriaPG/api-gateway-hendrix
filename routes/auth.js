@@ -1,5 +1,6 @@
 var jwt = require('jwt-simple');
 var User = require('../models/user');
+var bcrypt = require('bcrypt-nodejs');
 
 var auth = {
 
@@ -18,7 +19,7 @@ var auth = {
         }
 
         // Fire a query to your DB and check if the credentials are valid
-        var dbUserObj = auth.validate(username, password);
+        var dbUserObj = auth.validate(username,password);
 
         console.log(dbUserObj);
 
@@ -30,7 +31,7 @@ var auth = {
             });
             return;
         }
-
+        console.log("JOJOJO : " + dbUserObj);
         if (dbUserObj) {
 
             // If authentication is success, we will generate a token
@@ -45,51 +46,45 @@ var auth = {
         console.log('VALIDATE : ');
         // spoofing the DB response for simplicity
         // Use the User model to find a specific usermodel
-        var result={ // spoofing a userobject from the DB.
-            name: 'zesk8',
-            role: 'admin',
-            username: 'zesk8@node.com',
-            password: 'secret182'
-        };
-        User.find({ username:username, password:password }, function(err, user) {
-            if (err)
-            {
-                console.log(err);
+
+
+        var result= User.find({
+            where: {
+                user_name: username
             }
-            else{
-                console.log(user);
+        }).success(function(user){
+            if(user){
+                if (bcrypt.compareSync(password, user.pass)) { // Compare passwords
+                    return done(null, user);
+                } else {
+                    return done(err);
+                }
+            } else{
+                var err = {
+                    message: 'No existe el usuario'
+                }
+                return done(err);
             }
+        }).error(function(err){
+            return done(err);
         });
-        /*** var dbUserObj = { // spoofing a userobject from the DB.
-            name: 'zesk8',
-            role: 'admin',
-            username: 'zesk8@node.com',
-            password: 'secret182'
-        };***/
-        console.log(result);
+
         return result;
     },
 
     validateUser: function(username) {
+        console.log(username);
         console.log('VALIDATE  USER: ');
         // spoofing the DB response for simplicity
-        var result = { // spoofing a userobject from the DB.
-            name: 'zesk8',
-            role: 'user',
-            username: 'zesk8@node.com'
-        };
-        /*** var dbUserObj = { // spoofing a userobject from the DB.
-            name: 'zesk8',
-            role: 'user',
-            username: 'zesk8@node.com'
-        };***/
+        var result;
+
       User.find({ username:username }, function(err, user) {
             if (err)
             {
-                console.log("ERR : " + err);
+                result=err;
             }
             else{
-                console.log("user : " + user);
+                result=user;
             }
 
         });
