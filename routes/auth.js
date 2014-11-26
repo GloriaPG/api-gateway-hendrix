@@ -52,9 +52,9 @@ var auth = {
             where: {
                 user_name: username
             }
-        }).success(function(user){
+        }).exec(function(err,user){
             if(user){
-                if (bcrypt.compareSync(password, user.pass)) { // Compare passwords
+                if (bcrypt.compareSync(password, user.password)) { // Compare passwords
                     return done(null, user);
                 } else {
                     return done(err);
@@ -65,8 +65,6 @@ var auth = {
                 }
                 return done(err);
             }
-        }).error(function(err){
-            return done(err);
         });
 
         return result;
