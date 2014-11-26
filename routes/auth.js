@@ -42,14 +42,23 @@ var auth = {
     },
 
     validate: function(username, password) {
+        console.log('VALIDATE : ');
         // spoofing the DB response for simplicity
         // Use the User model to find a specific usermodel
-        var result
+        var result={ // spoofing a userobject from the DB.
+            name: 'zesk8',
+            role: 'admin',
+            username: 'zesk8@node.com',
+            password: 'secret182'
+        };
         User.find({ username:username, password:password }, function(err, user) {
             if (err)
-                result=err;
-            else
-                result =user;
+            {
+                console.log(err);
+            }
+            else{
+                console.log(user);
+            }
         });
         /*** var dbUserObj = { // spoofing a userobject from the DB.
             name: 'zesk8',
@@ -57,25 +66,34 @@ var auth = {
             username: 'zesk8@node.com',
             password: 'secret182'
         };***/
-        console.log('Resultado VALIDATE : ' +  result)
+        console.log(result);
         return result;
     },
 
-    validateUser: function(req,username) {
+    validateUser: function(username) {
+        console.log('VALIDATE  USER: ');
         // spoofing the DB response for simplicity
-        var result
+        var result = { // spoofing a userobject from the DB.
+            name: 'zesk8',
+            role: 'user',
+            username: 'zesk8@node.com'
+        };
         /*** var dbUserObj = { // spoofing a userobject from the DB.
             name: 'zesk8',
             role: 'user',
             username: 'zesk8@node.com'
         };***/
-       result = User.find({ username:username }, function(err, user) {
+      User.find({ username:username }, function(err, user) {
             if (err)
-                result=err;
-            else
-                result =user;
+            {
+                console.log("ERR : " + err);
+            }
+            else{
+                console.log("user : " + user);
+            }
+
         });
-        console.log('Resultado VALIDATEUSER : ' +  result)
+        console.log(result);
         return result;
     },
 }
