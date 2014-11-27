@@ -43,51 +43,24 @@ var auth = {
     },
 
     validate: function(username, password) {
-        console.log('VALIDATE : ');
         // spoofing the DB response for simplicity
-        // Use the User model to find a specific usermodel
-
-
-        var result= User.find({
-            where: {
-                user_name: username
-            }
-        }).exec(function(err,user){
-            if(user){
-                if (bcrypt.compareSync(password, user.password)) { // Compare passwords
-                    return done(null, user);
-                } else {
-                    return done(err);
-                }
-            } else{
-                var err = {
-                    message: 'No existe el usuario'
-                }
-                return done(err);
-            }
-        });
-
-        return result;
+        var dbUserObj = { // spoofing a userobject from the DB.
+            name: 'vm',
+            role: 'admin',
+            username: 'vm',
+            password: 'vm'
+        };
+        return dbUserObj;
     },
 
     validateUser: function(username) {
-        console.log(username);
-        console.log('VALIDATE  USER: ');
         // spoofing the DB response for simplicity
-        var result;
-
-      User.find({ username:username }, function(err, user) {
-            if (err)
-            {
-                result=err;
-            }
-            else{
-                result=user;
-            }
-
-        });
-        console.log(result);
-        return result;
+        var dbUserObj = { // spoofing a userobject from the DB.
+            name: 'vm',
+            role: 'admin',
+            username: 'vm'
+        };
+        return dbUserObj;
     },
 }
 

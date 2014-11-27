@@ -14,7 +14,7 @@ exports.postUsers = function(req, res) {
     if (err)
       res.send(err);
 
-    res.json({ message: 'New beer drinker added to the locker room!' });
+    res.json({ message: 'New user added :D !' });
   });
 };
 
